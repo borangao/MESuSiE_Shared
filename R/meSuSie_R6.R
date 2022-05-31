@@ -40,7 +40,7 @@ meSuSie_core<-function(R_mat_list,summary_stat_list,L,residual_variance=NULL,pri
     comp_residual<-meSuSieObject_obj$compute_residual(meSuSieData_obj,meSuSieObject_obj)
     
     
-    for (l_index in seq(1,10)) {
+    for (l_index in seq(1,L,1)) {
       
       comp_residual = comp_residual + t(meSuSieObject_obj$Xr[[l_index]])
       
