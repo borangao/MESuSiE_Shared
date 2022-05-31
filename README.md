@@ -17,6 +17,6 @@ they are not installed already.
 
 ## Quick Start
 
-See [Tutorial](https://borangao.github.io/meSuSie/) for detailed documentation and examples.
+See [Tutorial](https://borangao.github.io/meSuSie_Analysis/) for detailed documentation and examples.
 
 
