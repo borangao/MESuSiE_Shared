@@ -20,3 +20,6 @@ they are not installed already.
 See [Tutorial](https://borangao.github.io/meSuSie_Analysis/) for detailed documentation and examples.
 
 
+## Online App
+
+We also provide an online application of [meSuSie](https://borangao.shinyapps.io/meSuSie/). The toy data with the package can be provided to the app for an inital peak.
