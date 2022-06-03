@@ -239,8 +239,8 @@ meSuSieData <- R6Class("meSuSieData",public = list(
   ##First compute XtX.diag
   XtX_diag = function(Summary_Stat,Name_list){
     return( lapply(Name_list,function(x){
-      R2 = (summary_stat_list[[x]]$Z^2)/(summary_stat_list[[x]]$Z^2+summary_stat_list[[x]]$N-2)
-      sigma2 = self$var_y*(1-R2)*(summary_stat_list[[x]]$N-1)/(summary_stat_list[[x]]$N-2)
+      R2 = (Summary_Stat[[x]]$Z^2)/(Summary_Stat[[x]]$Z^2+Summary_Stat[[x]]$N-2)
+      sigma2 = self$var_y*(1-R2)*(Summary_Stat[[x]]$N-1)/(Summary_Stat[[x]]$N-2)
       return(sigma2/(Summary_Stat[[x]]$Se)^2)
     }))
   },
