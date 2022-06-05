@@ -1,5 +1,6 @@
 require(progress)
 require(R6)
+require(nloptr)
 #' meSuSie core function
 #'
 #' @param  R_mat_list A list of length N ancestry with each elment being correlation matrix with dimension p*p, the column name of the correlation matrix should match to the order of SNP name in summary_stat_list
