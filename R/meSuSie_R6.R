@@ -280,10 +280,15 @@ single_effect_regression<-function(XtR,XtX.diag, meSuSieObject_obj,l_index){
     
     opt_par<-pre_optim(N_ancestry,-30,10)
     
-    update_V<-optim(opt_par$inital_par,fn = loglik_cpp_R6,gr=NULL,betahat,shat2,meSuSieObject_obj$pi,opt_par$nancestry,opt_par$diag_index,method = "L-BFGS-B",lower=opt_par$lower_bound,upper=opt_par$upper_bound)
+   # update_V<-optim(opt_par$inital_par,fn = loglik_cpp_R6,gr=NULL,betahat,shat2,meSuSieObject_obj$pi,opt_par$nancestry,opt_par$diag_index,method = "L-BFGS-B",lower=opt_par$lower_bound,upper=opt_par$upper_bound)
+    intermediate_V<-nloptr(opt_par$inital_par, eval_f=loglik_cpp_R6,eval_grad_f = NULL,lb = opt_par$lower_bound,ub = opt_par$upper_bound,betahat=betahat,shat2=shat2,prior_weight=meSuSieObject_obj$pi,nancestry =opt_par$nancestry,diag_index = opt_par$diag_index,opts=list("algorithm"= "NLOPT_GN_DIRECT_L","xtol_rel"=1.0e-10))
+    update_V<-nloptr(intermediate_V$solution, eval_f=loglik_cpp_R6,eval_grad_f = NULL,lb = opt_par$lower_bound,ub = opt_par$upper_bound,betahat=betahat,shat2=shat2,prior_weight=meSuSieObject_obj$pi,nancestry =opt_par$nancestry,diag_index = opt_par$diag_index,opts=list("algorithm"= "NLOPT_LN_BOBYQA","xtol_rel"=1.0e-10))
+
+
   }
   
-  V_mat = vec_to_cov(update_V$par,opt_par$diag_index, opt_par$nancestry)
+#  V_mat = vec_to_cov(update_V$par,opt_par$diag_index, opt_par$nancestry)
+  V_mat = vec_to_cov(update_V$solution,opt_par$diag_index, opt_par$nancestry)
   
   #multivariate_out<-multivariate_regression(Xty_standardized,shat2,V_mat) 
   multivariate_out<-mvlmm_reg(betahat,shat2,V_mat) 
