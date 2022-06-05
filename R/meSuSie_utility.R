@@ -194,7 +194,7 @@ meSusie_plot_pip<-function(res,R_mat,summary_data,annotation_data=NULL){
   
   
   names(summary_data)
-  summary_data<-summary_stat_list
+#  summary_data<-summary_stat_list
  # summary_data<-lapply(summary_data,function(x){
  #   x$POS=seq(1,500,1)
  #   return(x)})
