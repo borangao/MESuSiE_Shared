@@ -135,7 +135,7 @@ meSuSieObject <- R6Class("meSuSieObject",public = list(
   },
   compute_SER_posterior_loglik = function(meSuSie_Data,comp_residual,l_index){
     return(Reduce("+",lapply(1:self$nancestry,function(x){
-      sum(-0.5/self$sigma2[[x]]*(-2*comp_residual*self$mu1[[l_index]][,x]*self$alpha[l_index,]+meSuSie_Data$XtX.diag[[x]]*self$mu2[[l_index]][,x]*self$alpha[l_index,]))
+      sum(-0.5/self$sigma2[[x]]*(-2*comp_residual[,x]*self$mu1[[l_index]][,x]*self$alpha[l_index,]+meSuSie_Data$XtX.diag[[x]]*self$mu2[[l_index]][,x]*self$alpha[l_index,]))
     })))
     
   },
