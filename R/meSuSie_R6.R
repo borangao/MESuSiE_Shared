@@ -200,6 +200,10 @@ meSuSieObject <- R6Class("meSuSieObject",public = list(
     cat(c(paste0("Potential causal SNPs with PIP > 0.5: "),meSuSie_Data$Summary_Stat[[1]]$SNP[which(self$pip>0.5)],"\n\n"))
     cat("Credible sets for effects: \n")
     print(self$cs)
+    if(length(self$cs$cs)==self$L){
+      cat("\n Number of found credible set equals the assigned number of effect \n")
+      cat(paste0("Please try increase the number of effects L > ",self$L))
+    }
     cat("\n Use meSusie_plot_pip() for Mahattan and PIP Plot")
 
   }
