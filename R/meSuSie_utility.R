@@ -117,16 +117,17 @@ in_CS_x = function (x, coverage = 0.9) {
 }
 get_purity = function(pos, Xcorr) {
   if (length(pos) == 1)
-    c(1,1,1)
+    c(1,1,1,1)
   else{
     value = Reduce(rbind,lapply(Xcorr,function(x)abs(x[pos,pos])))
     
     return(c(min(value,na.rm = TRUE),
              mean(value,na.rm = TRUE),
-             median(value,na.rm = TRUE)))
+             median(value,na.rm = TRUE),
+             quantile(value,probs = 0.2,names=F)))
   }
 }
-meSuSie_get_cs<-function(res,meSuSieData_obj,threshold = 0.5,coverage = 0.95,prior_tol = 1e-9){
+meSuSie_get_cs<-function(res,meSuSieData_obj,threshold = 0.5,cor_method ="min.abs.corr",coverage = 0.95,prior_tol = 1e-9){
   
   include_idx = unlist(lapply(res$V,function(x)max(diag(x))>prior_tol))
   status = in_CS(res$alpha,coverage = 0.95)
@@ -146,8 +147,8 @@ meSuSie_get_cs<-function(res,meSuSieData_obj,threshold = 0.5,coverage = 0.95,pri
     get_purity(cs[[i]],meSuSieData_obj$R)
   })))
   
-  colnames(purity) = c("min.abs.corr","mean.abs.corr","median.abs.corr")
-  is_pure = which(purity[,1] >= threshold)
+  colnames(purity) = c("min.abs.corr","mean.abs.corr","median.abs.corr","20%.abs.corr")
+  is_pure = which(purity[,colnames(purity)%in%cor_method] >= threshold)
   
   if (length(is_pure) > 0) {
     cs = cs[is_pure]
