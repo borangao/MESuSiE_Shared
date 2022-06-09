@@ -126,7 +126,7 @@ get_purity = function(pos, Xcorr) {
              median(value,na.rm = TRUE)))
   }
 }
-meSuSie_get_cs<-function(res,Xcorr,coverage = 0.95,prior_tol = 1e-9){
+meSuSie_get_cs<-function(res,meSuSieData_obj,threshold = 0.5,coverage = 0.95,prior_tol = 1e-9){
   
   include_idx = unlist(lapply(res$V,function(x)max(diag(x))>prior_tol))
   status = in_CS(res$alpha,coverage = 0.95)
@@ -143,11 +143,10 @@ meSuSie_get_cs<-function(res,Xcorr,coverage = 0.95,prior_tol = 1e-9){
   claimed_coverage = claimed_coverage[include_idx]
   
   purity = data.frame(do.call(rbind,lapply(1:length(cs),function (i){
-    get_purity(cs[[i]],Xcorr)
+    get_purity(cs[[i]],meSuSieData_obj$R)
   })))
   
   colnames(purity) = c("min.abs.corr","mean.abs.corr","median.abs.corr")
-  threshold = 0.5
   is_pure = which(purity[,1] >= threshold)
   
   if (length(is_pure) > 0) {
@@ -158,7 +157,9 @@ meSuSie_get_cs<-function(res,Xcorr,coverage = 0.95,prior_tol = 1e-9){
     rownames(purity) = row_names
     
     # Re-order CS list and purity rows based on purity.
-    ordering = order(purity[,1],decreasing = TRUE)
+  #  ordering = order(purity[,1],decreasing = TRUE)
+    
+    ordering =order(unlist(lapply(cs,function(x){max(unlist(lapply(meSuSieData_obj$Summary_Stat,function(y)max(abs(y$Z[x])))))})),decreasing = T)
     return(list(cs       = cs[ordering],
                 purity   = purity[ordering,],
                 cs_index = which(include_idx)[is_pure[ordering]],

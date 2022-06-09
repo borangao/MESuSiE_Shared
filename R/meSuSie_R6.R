@@ -8,7 +8,7 @@ require(nloptr)
 #' @param  L Number of effects supposed within the region
 #' @return An R6 object with pip, credible sets, and other features of the fine-mapping result. 
 #' @export
-meSuSie_core<-function(R_mat_list,summary_stat_list,L,residual_variance=NULL,prior_weights=NULL,optim_method ="optim",estimate_residual_variance =F,max_iter =100){
+meSuSie_core<-function(R_mat_list,summary_stat_list,L,residual_variance=NULL,prior_weights=NULL,optim_method ="optim",estimate_residual_variance =F,cor_threshold = 0.5,max_iter =100){
   
   cat("*************************************************************\n
   Multiple Ancestry Sum of Single Effect Model (meSuSie)          \n
@@ -74,7 +74,7 @@ meSuSie_core<-function(R_mat_list,summary_stat_list,L,residual_variance=NULL,pri
 
   cat("\n# Data analysis is done, and now generates result \n\n")
   ###Use function in Utility to output result
-  meSuSieObject_obj$get_result(meSuSie_get_cs(meSuSieObject_obj,R_mat_list),meSusie_get_pip(meSuSieObject_obj))
+  meSuSieObject_obj$get_result(meSuSie_get_cs(meSuSieObject_obj,R_mat_list,threshold = cor_threshold),meSusie_get_pip(meSuSieObject_obj))
   meSuSieObject_obj$mesusie_summary(meSuSieData_obj)
 
   time_end<-Sys.time()
