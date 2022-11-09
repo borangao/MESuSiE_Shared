@@ -1,15 +1,15 @@
-# meSuSie
+# MESuSiE
 
 Multiple Ancestry Sum of Single Effect Model for the identification of shared and unique signals in GWAS fine-mapping
   
 ## Installation
 
-To install the latest version of the meSuSie package from GitHub, run
+To install the latest version of the MESuSiE package from GitHub, run
 the following code in R:
 
 ```R
 library(devtools)
-install_github("borangao/meSuSie")
+install_github("borangao/MESuSiE")
 ```
 
 This command should automatically install all required packages if
